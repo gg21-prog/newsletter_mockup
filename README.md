@@ -89,7 +89,7 @@ python sort.py
 **Input**: Expects `output_truncated.jsonl` (or `output.jsonl` - adjust the INPUT variable in the script if needed)
 **Output**: Creates weekly files in the `weekly_data/` directory named as `{year}_week_{week}.jsonl`
 
-### 3. Scoring (`scoring_ollama_qwen.py`)
+### 4. Scoring (`scoring_ollama_qwen.py`)
 
 This script assigns importance scores to each legal case using an LLM.
 
@@ -107,7 +107,7 @@ python scoring_ollama_qwen.py
 
 **Output**: Adds an `importance_score` field to each entry in the weekly data files.
 
-### 4. Summarization (`filter_summarize.py`)
+### 5. Summarization (`filter_summarize.py`)
 
 This script generates summaries for the most important legal cases.
 
@@ -177,6 +177,7 @@ Note: The `weekly_data/` and `weekly_summaries/` directories will automatically 
 ## Example Data Formats
 
 ### Original Data Format
+
 Each entry in the original dataset follows this structure:
 
 ```json
@@ -194,6 +195,7 @@ Each entry in the original dataset follows this structure:
 ```
 
 ### Scored Data Format
+
 After running the scoring script, each entry includes an importance score:
 
 ```json
@@ -212,6 +214,7 @@ After running the scoring script, each entry includes an importance score:
 ```
 
 ### Summarized Data Format
+
 High-scoring cases are summarized in the weekly summaries with this format:
 
 ```json
