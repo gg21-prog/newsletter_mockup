@@ -22,12 +22,14 @@ Before running this project, ensure you have the following installed:
 ## Setup
 
 1. Clone this repository:
+
    ```bash
-   git clone <repository-url>
-   cd <repository-name>
+   git clone https://github.com/gg21-prog/newsletter_mockup
+   cd newsletter_mockup
    ```
 
 2. Install required Python packages:
+
    ```bash
    pip install datasets ollama tqdm
    ```
@@ -44,11 +46,13 @@ Before running this project, ensure you have the following installed:
 The pipeline consists of five main scripts that should be run in sequence:
 
 ### 1. Data Filtering (`filtering.py`)
+
 This script downloads and filters the legal case dataset from Hugging Face.
 
 **Purpose**: Extracts relevant legal cases from the Caselaw Access Project dataset, extracts dates from the text, and saves the data in JSONL format.
 
 **Run the script**:
+
 ```bash
 python filtering.py
 ```
@@ -56,11 +60,13 @@ python filtering.py
 **Output**: Creates `output.jsonl` with filtered legal cases containing IDs, metadata, text, and extracted dates.
 
 ### 2. Data Truncation (`limit.py`)
+
 This script limits the dataset size to handle large datasets more efficiently.
 
 **Purpose**: Truncates the full dataset to a specified size (5GB by default) to prevent memory issues and reduce processing time during development and testing.
 
 **Run the script**:
+
 ```bash
 python limit.py
 ```
@@ -69,11 +75,13 @@ python limit.py
 **Output**: Creates `output_truncated.jsonl` with a subset of the original data
 
 ### 3. Data Sorting (`sort.py`)
+
 This script organizes the filtered/truncated data by week.
 
 **Purpose**: Groups legal cases by week of the year and creates separate files for each week to enable weekly processing.
 
 **Run the script**:
+
 ```bash
 python sort.py
 ```
@@ -82,11 +90,13 @@ python sort.py
 **Output**: Creates weekly files in the `weekly_data/` directory named as `{year}_week_{week}.jsonl`
 
 ### 3. Scoring (`scoring_ollama_qwen.py`)
+
 This script assigns importance scores to each legal case using an LLM.
 
 **Purpose**: Uses an open-source LLM (Qwen2.5) to evaluate and score each legal case from 1-5 based on legal importance (1 = trivial/local, 3 = moderate precedent, 5 = landmark case).
 
 **Run the script**:
+
 ```bash
 # First, start Ollama server in a separate terminal
 ollama serve
@@ -98,11 +108,13 @@ python scoring_ollama_qwen.py
 **Output**: Adds an `importance_score` field to each entry in the weekly data files.
 
 ### 4. Summarization (`filter_summarize.py`)
+
 This script generates summaries for the most important legal cases.
 
 **Purpose**: Filters cases with high importance scores (≥4) and generates concise summaries using an LLM, creating a newsletter-ready format.
 
 **Run the script**:
+
 ```bash
 # Make sure Ollama server is running
 ollama serve
@@ -116,27 +128,32 @@ python filter_summarize.py
 ## Script Descriptions
 
 ### `filtering.py`
+
 - Downloads the Caselaw Access Project dataset from Hugging Face
 - Extracts dates from legal texts using regex patterns
 - Outputs structured data with case text, metadata, and normalized dates
 
 ### `limit.py`
+
 - Limits the dataset size to handle large datasets more efficiently
 - Truncates the full dataset to a specified size (5GB by default)
 - Prevents memory issues and reduces processing time during development and testing
 
 ### `sort.py`
+
 - Organizes cases by week using ISO calendar weeks
 - Creates separate files for each week to enable batch processing
 - Prepares data for time-based analysis
 
 ### `scoring_ollama_qwen.py`
+
 - Evaluates legal case importance using an LLM
 - Processes cases in batches for efficiency
 - Assigns scores from 1-5 based on legal significance
 - Handles errors gracefully with fallback scoring
 
 ### `filter_summarize.py`
+
 - Filters for high-importance cases (score ≥4)
 - Generates concise summaries focusing on legal issue, ruling, and significance
 - Outputs clean, readable summaries suitable for newsletters
