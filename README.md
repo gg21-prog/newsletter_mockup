@@ -174,6 +174,53 @@ Note: The `weekly_data/` and `weekly_summaries/` directories will automatically 
 └── weekly_summaries/   # Generated summaries (created automatically)
 ```
 
+## Example Data Formats
+
+### Original Data Format
+Each entry in the original dataset follows this structure:
+
+```json
+{
+  "id": "f2d_474/html/0001-01.html",
+  "metadata": {
+    "author": "PER CURIAM:",
+    "license": "Public Domain",
+    "provenance": "CAP-Dolma-0000.json.gz:1",
+    "url": "https://static.case.law/"
+  },
+  "text": "\n    UNITED STATES of America, Appellee, v. Daniel Dee VEON, Appellant.\n    ... (full legal case text)",
+  "date": "1973-02-12"
+}
+```
+
+### Scored Data Format
+After running the scoring script, each entry includes an importance score:
+
+```json
+{
+  "id": "mich_116/html/0669-01.html",
+  "metadata": {
+    "author": "Grant, C. J.",
+    "license": "Public Domain",
+    "provenance": "CAP-Dolma-0001.json.gz:203701",
+    "url": "https://static.case.law/"
+  },
+  "text": "\n    HOLTON v. HOLTON.\n    \n    1. Divorce \u2014 Collusion\u2014Evidence in Former Suit.\n    ... (full legal case text)",
+  "date": "1898-05-06",
+  "importance_score": 2
+}
+```
+
+### Summarized Data Format
+High-scoring cases are summarized in the weekly summaries with this format:
+
+```json
+{
+  "importance_score": 4,
+  "summary": "The legal issue was whether a promissory note given in consideration of the completion and operation of a railroad by a specified date makes that provision a condition precedent to liability, rendering the note void if the condition is not met. The court ruled that the note was invalid due to non-performance of the condition precedent. This case matters because it clarifies the legal standards for conditions precedent in promissory notes, impacting future contractual agreements and enforceability of such notes."
+}
+```
+
 ## Customization
 
 You can customize the following aspects of the pipeline:
